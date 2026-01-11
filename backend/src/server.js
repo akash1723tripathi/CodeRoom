@@ -32,8 +32,6 @@ app.use("/api/sessions", sessionRoutes )
 
 
 
-
-
 //test-purpose
 //when you pass an array of middlewares, express flatten them and will execute them in order
 // app.get("/video-call", protectRoute, (req, res) => {
