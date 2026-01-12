@@ -3,7 +3,7 @@ import {
   ArrowRightIcon,
   CheckIcon,
   Code2Icon,
-  GitGraph ,
+  GitGraph,
   UsersIcon,
   VideoIcon,
   ZapIcon,
@@ -29,7 +29,7 @@ function HomePage() {
               <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
                 Code Room
               </span>
-              <span className="text-xs text-base-content/60 font-medium -mt-1">Code Together</span>
+              <span className="text-xs text-base-content/60 font-medium -mt-1">Code-Debug-Learn </span>
             </div>
           </Link>
 
@@ -49,36 +49,39 @@ function HomePage() {
           {/* LEFT CONTENT */}
           <div className="space-y-8">
             <div className="badge badge-primary badge-lg">
-              <ZapIcon className="size-4" />
-              Real-time Collaboration
+              {/* <ZapIcon className="size-4" /> */}
+              ⚡ Real-Time Coding • Instant Sync • Zero Setup
             </div>
 
             <h1 className="text-5xl lg:text-7xl font-black leading-tight">
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Code Together,
+                Build, Debug,
               </span>
               <br />
-              <span className="text-base-content">Learn Together</span>
+              <span className="text-base-content">Grow — Together</span>
             </h1>
 
             <p className="text-xl text-base-content/70 leading-relaxed max-w-xl">
-              The ultimate platform for collaborative coding interviews and pair programming.
-              Connect face-to-face, code in real-time, and ace your technical interviews.
+              Code Room is designed for developers who believe learning is better when done together. Collaborate in real time, share your screen and code editor, communicate seamlessly, and simulate real interview environments — all in one place.
             </p>
 
             {/* FEATURE PILLS */}
             <div className="flex flex-wrap gap-3">
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Live Video Chat
+                Live Audio & Video Collaboration
               </div>
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Code Editor
+                Shared Real-Time Code Editor
               </div>
               <div className="badge badge-lg badge-outline">
                 <CheckIcon className="size-4 text-success" />
-                Multi-Language
+                Multi-Language Execution Support
+              </div>
+              <div className="badge badge-lg badge-outline">
+                <CheckIcon className="size-4 text-success" />
+                Interview-Ready Environment
               </div>
             </div>
 
@@ -93,18 +96,18 @@ function HomePage() {
 
               <button className="btn btn-outline btn-lg">
                 <VideoIcon className="size-5" />
-                Watch Demo
+                Explore How It Works
               </button>
             </div>
 
             {/* STATS */}
             <div className="stats stats-vertical lg:stats-horizontal bg-base-100 shadow-lg">
               <div className="stat">
-                <div className="stat-value text-primary">10K+</div>
+                <div className="stat-value text-primary">10+</div>
                 <div className="stat-title">Active Users</div>
               </div>
               <div className="stat">
-                <div className="stat-value text-secondary">50K+</div>
+                <div className="stat-value text-secondary">15+</div>
                 <div className="stat-title">Sessions</div>
               </div>
               <div className="stat">
@@ -127,54 +130,64 @@ function HomePage() {
       <div className="max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            Everything You Need to <span className="text-primary font-mono">Succeed</span>
+            Built for <span className="text-primary font-mono">Real-World</span> Coding Sessions
           </h2>
           <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
-            Powerful features designed to make your coding interviews seamless and productive
+            Core features designed to simulate real interviews, peer learning, and collaborative problem-solving.
           </p>
         </div>
 
         {/* FEATURES GRID */}
+        {/* FEATURES GRID */}
         <div className="grid md:grid-cols-3 gap-8">
+
           {/* Feature 1 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <VideoIcon className="size-8 text-primary" />
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary/20">
+                <VideoIcon className="size-8 text-primary transition-transform duration-300 group-hover:scale-110" />
               </div>
-              <h3 className="card-title">HD Video Call</h3>
+              <h3 className="card-title transition-colors duration-300 group-hover:text-primary">
+                Low-Latency Video & Audio
+              </h3>
               <p className="text-base-content/70">
-                Crystal clear video and audio for seamless communication during interviews
+                Communicate naturally with minimal lag, making interviews and pair programming feel face-to-face.
               </p>
             </div>
           </div>
 
           {/* Feature 2 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <Code2Icon className="size-8 text-primary" />
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary/20">
+                <Code2Icon className="size-8 text-primary transition-transform duration-300 group-hover:scale-110" />
               </div>
-              <h3 className="card-title">Live Code Editor</h3>
+              <h3 className="card-title transition-colors duration-300 group-hover:text-primary">
+                Real-Time Shared Code Editor
+              </h3>
               <p className="text-base-content/70">
-                Collaborate in real-time with syntax highlighting and multiple language support
+                Write, edit, and review code together with instant synchronization, syntax highlighting, and multi-language support.
               </p>
             </div>
           </div>
 
           {/* Feature 3 */}
-          <div className="card bg-base-100 shadow-xl">
+          <div className="card bg-base-100 shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl group">
             <div className="card-body items-center text-center">
-              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
-                <UsersIcon className="size-8 text-primary" />
+              <div className="size-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:bg-primary/20">
+                <UsersIcon className="size-8 text-primary transition-transform duration-300 group-hover:scale-110" />
               </div>
-              <h3 className="card-title">Easy Collaboration</h3>
+              <h3 className="card-title transition-colors duration-300 group-hover:text-primary">
+                Designed for Collaboration
+              </h3>
               <p className="text-base-content/70">
-                Share your screen, discuss solutions, and learn from each other in real-time
+                Discuss solutions, share ideas, and debug together — just like a real technical interview or team session.
               </p>
             </div>
           </div>
+
         </div>
+
       </div>
     </div>
   );
