@@ -1,8 +1,10 @@
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from '@clerk/clerk-react';
+import { SignedIn,useUser } from '@clerk/clerk-react';
 import { Navigate, Route, Routes } from 'react-router';
 import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
+import Dashboard from './pages/Dashboard';
 import ProblemsPage from './pages/ProblemsPage';
+import ProblemPanel from './pages/ProblemPanel';
+import SessionPage from './pages/SessionPage';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -11,39 +13,16 @@ function App() {
   
   return (
     <>
-    <Routes>
-      <Route path="/" element={<HomePage/>}/>
-      <Route path="/about" element={<AboutPage/>}/>
-      {/* <Route path="/problems" element={(isSignedIn)? <ProblemsPage/> :<Navigate to="/"/> }/> */}
-      <Route path="/problems" element={<ProblemsPage/>}/>
+      <Routes>
+        <Route path="/" element={!isSignedIn ? <HomePage/> : <Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={ (isSignedIn)? <Dashboard/>: <Navigate to="/"/>} />
+        <Route path="/problems" element={(isSignedIn)? <ProblemsPage/> :<Navigate to="/"/> }/>
+        <Route path="/problem/:id" element={(isSignedIn)? <ProblemPanel/> :<Navigate to="/"/> }/>
+        <Route path="/session/:id" element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />} />
 
+      </Routes>
 
-
-
-
-
-
-
-
-
-
-      {/* <SignedOut>
-        <SignInButton mode='modal'>Get Started</SignInButton>
-      </SignedOut> */}
-
-      {/* <SignedOut>
-        <SignInButton mode='modal'>
-          <button className='bg-red-200'>
-            Get Ready
-          </button>
-        </SignInButton>
-      </SignedOut> */}
-
-      {/* <SignedIn>
-        <UserButton />
-      </SignedIn> */}
-    </Routes>
-    <Toaster/>
+    <Toaster toastOptions={{duration:3000}}/>
     </>
   )
 }
