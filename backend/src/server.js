@@ -25,7 +25,15 @@ app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use(clerkMiddleware());
 
 // 3. INNGEST SERVER
-app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use(
+  "/api/inngest",
+  serve({
+    client: inngest,
+    functions,
+    serveHost: "https://coderoom-backend-gwbc.onrender.com",
+    servePath: "/api/inngest",
+  })
+);
 
 // 4. APP ROUTES
 app.get("/", (req, res) => {
