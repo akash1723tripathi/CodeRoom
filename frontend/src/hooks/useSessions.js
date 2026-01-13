@@ -1,65 +1,110 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAuth } from "@clerk/clerk-react"; // Import Clerk Auth
 import toast from "react-hot-toast";
-import { sessionApi } from "../api/sessions";
+import axiosInstance from "../lib/axios"; // Import your fixed Axios instance
 
+// --- 1. Create Session ---
 export const useCreateSession = () => {
-      const result = useMutation({
-            mutationKey: ["createSession"],
-            mutationFn: sessionApi.createSession,
-            onSuccess: () => toast.success("Session created successfully!"),
-            onError: (error) => toast.error(error.response?.data?.message || "Failed to create room"),
-      });
+  const { getToken } = useAuth(); // Get the token helper
 
-      return result;
+  return useMutation({
+    mutationKey: ["createSession"],
+    mutationFn: async (data) => {
+      const token = await getToken(); // Get fresh token
+      const res = await axiosInstance.post("/sessions", data, {
+        headers: { Authorization: `Bearer ${token}` }, // Attach token
+      });
+      return res.data;
+    },
+    onSuccess: () => toast.success("Session created successfully!"),
+    onError: (error) => toast.error(error.response?.data?.message || "Failed to create room"),
+  });
 };
 
+// --- 2. Get Active Sessions ---
 export const useActiveSessions = () => {
-      const result = useQuery({
-            queryKey: ["activeSessions"],
-            queryFn: sessionApi.getActiveSessions,
-      });
+  const { getToken } = useAuth();
 
-      return result;
+  return useQuery({
+    queryKey: ["activeSessions"],
+    queryFn: async () => {
+      const token = await getToken();
+      const res = await axiosInstance.get("/sessions/active", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+  });
 };
 
+// --- 3. Get Recent Sessions ---
 export const useMyRecentSessions = () => {
-      const result = useQuery({
-            queryKey: ["myRecentSessions"],
-            queryFn: sessionApi.getMyRecentSessions,
-      });
+  const { getToken } = useAuth();
 
-      return result;
+  return useQuery({
+    queryKey: ["myRecentSessions"],
+    queryFn: async () => {
+      const token = await getToken();
+      const res = await axiosInstance.get("/sessions/my-recent", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+  });
 };
 
+// --- 4. Get Session By ID ---
 export const useSessionById = (id) => {
-      const result = useQuery({
-            queryKey: ["session", id],
-            queryFn: () => sessionApi.getSessionById(id),
-            enabled: !!id,
-            refetchInterval: 5000, // refetch every 5 seconds to detect session status changes
-      });
+  const { getToken } = useAuth();
 
-      return result;
+  return useQuery({
+    queryKey: ["session", id],
+    queryFn: async () => {
+      const token = await getToken();
+      const res = await axiosInstance.get(`/sessions/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+    enabled: !!id && !!getToken, // Only run if we have an ID
+    refetchInterval: 5000, 
+  });
 };
 
+// --- 5. Join Session ---
 export const useJoinSession = () => {
-      const result = useMutation({
-            mutationKey: ["joinSession"],
-            mutationFn: sessionApi.joinSession,
-            onSuccess: () => toast.success("Joined session successfully!"),
-            onError: (error) => toast.error(error.response?.data?.message || "Failed to join session"),
-      });
+  const { getToken } = useAuth();
 
-      return result;
+  return useMutation({
+    mutationKey: ["joinSession"],
+    mutationFn: async (sessionId) => {
+      const token = await getToken();
+      // Assuming endpoint is POST /sessions/:id/join
+      const res = await axiosInstance.post(`/sessions/${sessionId}/join`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+    onSuccess: () => toast.success("Joined session successfully!"),
+    onError: (error) => toast.error(error.response?.data?.message || "Failed to join session"),
+  });
 };
 
+// --- 6. End Session ---
 export const useEndSession = () => {
-      const result = useMutation({
-            mutationKey: ["endSession"],
-            mutationFn: sessionApi.endSession,
-            onSuccess: () => toast.success("Session ended successfully!"),
-            onError: (error) => toast.error(error.response?.data?.message || "Failed to end session"),
-      });
+  const { getToken } = useAuth();
 
-      return result;
+  return useMutation({
+    mutationKey: ["endSession"],
+    mutationFn: async (sessionId) => {
+      const token = await getToken();
+      // Assuming endpoint is DELETE /sessions/:id to end it
+      const res = await axiosInstance.delete(`/sessions/${sessionId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
+    },
+    onSuccess: () => toast.success("Session ended successfully!"),
+    onError: (error) => toast.error(error.response?.data?.message || "Failed to end session"),
+  });
 };
