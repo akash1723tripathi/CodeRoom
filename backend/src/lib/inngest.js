@@ -13,22 +13,27 @@ const syncUser = inngest.createFunction(
 
             const { id, email_addresses, first_name, last_name, image_url } = event.data;
 
-            const newUser = {
+            const userData = {
                   clerkId: id,
                   email: email_addresses[0]?.email_address,
                   name: `${first_name || ""} ${last_name || ""}`,
                   profileImage: image_url,
             };
 
-            await User.create(newUser);
+            // --- CHANGED FROM User.create() TO findOneAndUpdate ---
+            // This fixes the crash. If user exists, update them. If not, create them.
+            await User.findOneAndUpdate(
+                  { clerkId: id },  // Search criteria
+                  userData,         // Data to update/insert
+                  { upsert: true, new: true } // Options: upsert creates if missing
+            );
 
+            // Now this will run even if the user was already in MongoDB
             await upsertStreamUser({
-                  id: newUser.clerkId.toString(),
-                  name: newUser.name,
-                  image: newUser.profileImage,
+                  id: userData.clerkId.toString(),
+                  name: userData.name,
+                  image: userData.profileImage,
             });
-
-            //Welcome email scheduling 
       }
 );
 
