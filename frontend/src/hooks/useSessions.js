@@ -98,13 +98,23 @@ export const useEndSession = () => {
     mutationKey: ["endSession"],
     mutationFn: async (sessionId) => {
       const token = await getToken();
-      // Assuming endpoint is DELETE /sessions/:id to end it
-      const res = await axiosInstance.delete(`/sessions/${sessionId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+
+      // FIX 1: Use .post() instead of .delete()
+      // FIX 2: Add "/end" to the URL
+      const res = await axiosInstance.post(
+        `/sessions/${sessionId}/end`, // <--- Correct URL
+        {}, // Empty body for POST requests
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       return res.data;
     },
-    onSuccess: () => toast.success("Session ended successfully!"),
-    onError: (error) => toast.error(error.response?.data?.message || "Failed to end session"),
+    onSuccess: () => {
+      toast.success("Session ended successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to end session");
+    },
   });
 };
